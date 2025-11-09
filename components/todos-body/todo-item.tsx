@@ -1,23 +1,29 @@
+import { useUpdateTodo } from "@/hooks";
 import { cn } from "@/lib/utils";
+import { Todo } from "@/types";
 import Image from "next/image";
 
 type props = {
-  id: number;
-  content: string;
-  completed: boolean;
+  todo: Todo;
   className?: string;
 };
-export const TodoItem = ({ id, content, completed, className }: props) => {
+export const TodoItem = ({ todo, className }: props) => {
+  const { mutate } = useUpdateTodo();
   return (
     <div
       className={cn(
         "h-18 px-6 overflow-hidden flex items-center justify-between text-xl cursor-pointer border-border border border-x-0 border-t-0 last:border-0 group",
-        className
+        className,
       )}
     >
       <div className="flex items-center gap-5">
-        {completed ? (
-          <div className="h-6 w-6 rounded-full border-none check flex items-center justify-center">
+        {todo.completed ? (
+          <div
+            className="h-6 w-6 rounded-full border-none check flex items-center justify-center"
+            onClick={() =>
+              mutate({ id: todo.id, payload: { completed: !todo.completed } })
+            }
+          >
             <Image
               src="/images/icon-check.svg"
               alt="check icon"
@@ -27,14 +33,21 @@ export const TodoItem = ({ id, content, completed, className }: props) => {
             />
           </div>
         ) : (
-          <div className="h-6 w-6 rounded-full border-border border hover:border-2 check-border"></div>
+          <div
+            className="h-6 w-6 rounded-full border-border border hover:border-2 check-border"
+            onClick={() =>
+              mutate({ id: todo.id, payload: { completed: !todo.completed } })
+            }
+          ></div>
         )}
         <p
           className={cn(
-            completed ? "line-through dark:text-gray-600 text-gray-400" : ""
+            todo.completed
+              ? "line-through dark:text-gray-600 text-gray-400"
+              : "",
           )}
         >
-          {content}
+          {todo.content}
         </p>
       </div>
 
