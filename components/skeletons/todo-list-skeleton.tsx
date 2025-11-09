@@ -11,7 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
  */
 export function TodoListSkeleton() {
   return (
-    <div className="p-4 space-y-6">
+    <div className="p-4 space-y-6 bg-popover">
       {/* Add Todo Form Skeleton */}
 
       {/* Todo List Skeleton */}

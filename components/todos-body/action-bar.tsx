@@ -39,7 +39,7 @@ export const ActionBar = ({}: props) => {
 
   return (
     <Suspense fallback={null}>
-      <div className="h-16 px-6 overflow-hidden flex items-center justify-between w-full border-border border border-b-0 border-x-0 ">
+      <div className="h-16 px-6 flex items-center justify-between w-full border-border border border-b-0 border-x-0 bg-popover rounded-b-[5px] overflow-hidden">
         {isLoading || isPending ? (
           <Skeleton className="h-2 w-8 rounded-full" />
         ) : (
@@ -47,7 +47,7 @@ export const ActionBar = ({}: props) => {
             {(todos && todos.length) || 0} items left
           </p>
         )}
-        <div className="flex absolute md:relative items-center gap-4 w-full md:w-auto h-16 md:h-auto top-8 md:top-0 z-80 md:z-0">
+        <div className="md:flex hidden items-center gap-4 h-16">
           {tabs.map((tab) => (
             <button
               key={tab.id}

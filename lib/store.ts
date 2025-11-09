@@ -45,12 +45,13 @@ export const useTodoStore = create<TodoStore>((set) => ({
     })),
 
   // Update an existing todo in the store
-  updateTodo: (id, updatedTodo) =>
+  updateTodo: (id, updatedTodo) => {
     set((state) => ({
       todos: state.todos.map((todo) =>
         todo.id === id ? { ...todo, ...updatedTodo } : todo,
       ),
-    })),
+    }));
+  },
 
   // Remove a todo from the store
   removeTodo: (id) =>

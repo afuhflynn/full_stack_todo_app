@@ -1,4 +1,4 @@
-import { useUpdateTodo } from "@/hooks";
+import { useDeleteTodo, useUpdateTodo } from "@/hooks";
 import { cn } from "@/lib/utils";
 import { Todo } from "@/types";
 import Image from "next/image";
@@ -9,6 +9,7 @@ type props = {
 };
 export const TodoItem = ({ todo, className }: props) => {
   const { mutate } = useUpdateTodo();
+  const { mutate: deleteTodo } = useDeleteTodo();
   return (
     <div
       className={cn(
@@ -57,6 +58,7 @@ export const TodoItem = ({ todo, className }: props) => {
         height={17.68}
         width={17.68}
         className="w-[17.68px] h-[17.68px] hidden group-hover:block transition-all duration-75"
+        onClick={() => deleteTodo(todo.id)}
       />
     </div>
   );

@@ -158,7 +158,6 @@ export const useUpdateTodo = () => {
       toast.success("Todo updated successfully!");
     },
     onMutate: async ({ id, payload }) => {
-      const toastId = toast.loading("Updating todo...");
       await queryClient.cancelQueries({ queryKey: todoKeys.detail(id) });
       await queryClient.cancelQueries({ queryKey: todoKeys.lists() });
 
@@ -168,11 +167,6 @@ export const useUpdateTodo = () => {
       queryClient.setQueryData(todoKeys.detail(id), (old) =>
         old ? { ...old, ...payload } : undefined,
       );
-      queryClient.setQueryData(todoKeys.lists(), (old: Todo[] = []) =>
-        old.map((todo) => (todo.id === id ? { ...todo, ...payload } : todo)),
-      );
-
-      toast.dismiss(toastId);
 
       return { previousTodo, previousTodos };
     },
@@ -208,6 +202,7 @@ export const useDeleteTodo = () => {
     mutationFn: (id: string) => deleteTodo(id),
     onSuccess: (data, id) => {
       removeTodo(id);
+      toast.success("Todo deleted successfully");
     },
     onMutate: async (id) => {
       await queryClient.cancelQueries({ queryKey: todoKeys.lists() });
@@ -218,6 +213,8 @@ export const useDeleteTodo = () => {
       return { previousTodos };
     },
     onError: (err, id, context) => {
+      // @ts-ignore
+      toast.error(`An error occurred deleting todo: ${err?.message}`);
       if (context?.previousTodos) {
         queryClient.setQueryData(todoKeys.lists(), context.previousTodos);
       }

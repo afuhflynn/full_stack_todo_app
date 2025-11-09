@@ -102,7 +102,7 @@ export async function DELETE(
   try {
     const { id } = await params;
     await prisma.todo.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return new NextResponse(null, { status: 204 }); // No Content
