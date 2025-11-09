@@ -1,26 +1,239 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-josefin-sans);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --radius: 0.625rem;
+  --font-josefin-sans: "Josefin Sans", sans-serif;
+
+  /* Light Theme */
+  --background: hsl(0, 0%, 98%);
+  --foreground: hsl(235, 19%, 35%);
+  --primary: hsl(220, 98%, 61%);
+  --primary-foreground: hsl(0, 0%, 98%);
+  --secondary: hsl(233, 11%, 84%);
+  --secondary-foreground: hsl(235, 19%, 35%);
+  --muted: hsl(234, 39%, 85%);
+  --muted-foreground: hsl(236, 9%, 61%);
+  --accent: hsl(192, 100%, 67%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 100%, 50%); /* Not in style-guide, but good to have */
+  --border: hsl(233, 11%, 84%);
+  --input: hsl(233, 11%, 84%);
+  --ring: hsl(220, 98%, 61%);
+  --card: hsl(0, 0%, 98%);
+  --card-foreground: hsl(235, 19%, 35%);
+  --popover: hsl(0, 0%, 98%);
+  --popover-foreground: hsl(235, 19%, 35%);
+
+  --sidebar: hsl(0 0% 98%);
+
+  --sidebar-foreground: hsl(240 5.3% 26.1%);
+
+  --sidebar-primary: hsl(240 5.9% 10%);
+
+  --sidebar-primary-foreground: hsl(0 0% 98%);
+
+  --sidebar-accent: hsl(240 4.8% 95.9%);
+
+  --sidebar-accent-foreground: hsl(240 5.9% 10%);
+
+  --sidebar-border: hsl(220 13% 91%);
+
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+}
+
+.dark {
+  /* Dark Theme */
+  --background: hsl(235, 21%, 11%);
+  --foreground: hsl(234, 39%, 85%);
+  --primary: hsl(220, 98%, 61%);
+  --primary-foreground: hsl(0, 0%, 98%);
+  --secondary: hsl(235, 24%, 19%);
+  --secondary-foreground: hsl(234, 39%, 85%);
+  --muted: hsl(233, 14%, 35%);
+  --muted-foreground: hsl(236, 33%, 92%);
+  --accent: hsl(192, 100%, 67%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 100%, 50%); /* Not in style-guide, but good to have */
+  --border: hsl(237, 14%, 26%);
+  --input: hsl(237, 14%, 26%);
+  --ring: hsl(220, 98%, 61%);
+  --card: hsl(235, 24%, 19%);
+  --card-foreground: hsl(234, 39%, 85%);
+  --popover: hsl(235, 24%, 19%);
+  --popover-foreground: hsl(234, 39%, 85%);
+  --sidebar: hsl(240 5.9% 10%);
+  --sidebar-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-primary: hsl(224.3 76.3% 48%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(240 3.7% 15.9%);
+  --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-border: hsl(240 3.7% 15.9%);
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+}
+
+@layer base {
+  @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap");
+
+  * {
+    @apply border-border outline-ring/50;
   }
-}
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-josefin-sans);
+    font-size: 18px;
+  }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  button {
+    @apply cursor-pointer;
+  }
+
+  /* Global scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+  }
+
+  /* Thumb */
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: linear-gradient(
+      180deg,
+      rgba(168, 85, 247, 0.7),
+      rgba(59, 130, 246, 0.7)
+    );
+    box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.25);
+    transition: background 0.3s ease;
+  }
+
+  /* Hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+      180deg,
+      rgba(168, 85, 247, 1),
+      rgba(59, 130, 246, 1)
+    );
+  }
+
+  /* Dark mode */
+  .dark ::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+      180deg,
+      rgba(147, 51, 234, 0.6),
+      rgba(37, 99, 235, 0.6)
+    );
+  }
+
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+      180deg,
+      rgba(147, 51, 234, 0.9),
+      rgba(37, 99, 235, 0.9)
+    );
+  }
+
+  .dark ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .todo-item {
+  }
+  .check {
+    background-image: linear-gradient(
+      to right,
+      hsl(192, 100%, 67%),
+      hsl(280, 87%, 65%)
+    );
+  }
+
+  .check-border {
+    --bg: var(--color-popover); /* inner fill color */
+    --thickness: 2px; /* border thickness on hover */
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    position: relative;
+    display: inline-block;
+    background: var(--bg); /* default look */
+    transition: background 0.25s ease;
+    overflow: visible; /* pseudo elements handle the visuals */
+  }
+
+  /* gradient layer (bottom) */
+  .check-border::before {
+    content: "";
+    position: absolute;
+    inset: 0; /* cover the whole outer circle */
+    border-radius: 50%;
+    background: transparent; /* hidden until hover */
+    z-index: 0;
+    transition: background 0.25s ease;
+    pointer-events: none;
+  }
+
+  /* inner mask (sits above the gradient, creates the ring) */
+  .check-border::after {
+    content: "";
+    position: absolute;
+    inset: var(--thickness); /* how much of the gradient is hidden by default */
+    border-radius: 50%;
+    background: var(--bg);
+    z-index: 1;
+    transition: inset 0.25s ease;
+    pointer-events: none;
+  }
+
+  /* hover state: reveal gradient and keep inner inset the same */
+  .check-border:hover::before {
+    background: linear-gradient(
+      to right,
+      hsl(192, 100%, 67%),
+      hsl(280, 87%, 65%)
+    );
+  }
+
+  /* if you want the inner circle to "shrink" on hover (animate border reveal) */
+  /* .check-border:hover::after { inset: calc(var(--thickness) + 0px); } */
 }
