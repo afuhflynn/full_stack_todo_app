@@ -4,7 +4,11 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+}
+
+generator zod { 
+  provider = "prisma-zod-generator"
+  output = "../auto-generated/zod"
 }
 
 model User {
