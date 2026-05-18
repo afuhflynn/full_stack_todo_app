@@ -3,10 +3,6 @@ import {
 } from "next/server";
 
 import { 
-  prisma 
-} from "@/lib/prisma";
-
-import { 
   DbService
 } from "@/server/services/db-service"; 
 
@@ -128,7 +124,7 @@ export async function DELETE(
   }
   try {
     const { id } = await params;
-    
+
     await client.todo.delete({
       where: { id },
     });
