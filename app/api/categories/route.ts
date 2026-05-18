@@ -1,8 +1,22 @@
-import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
-import { CreateCategoryPayload } from "@/types";
-import { headers } from "next/headers";
-import { auth } from "@/lib/auth";
+import { 
+  NextResponse 
+} from "next/server";
+
+import { 
+  DbService
+} from "@/server/services/db-service"; 
+
+import { 
+  CreateCategoryPayload 
+} from "@/types";
+
+import { 
+  headers 
+} from "next/headers";
+
+import { 
+  auth 
+} from "@/lib/auth";
 
 /**
  * =================================
@@ -18,9 +32,14 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthenticated." }, { status: 401 });
   }
   try {
-    const categories = await prisma.category.findMany({
+    const dbService = new DbService(); 
+    
+    const client = await dbService.getDatabase();
+
+    const categories = await client.category.findMany({
       orderBy: { createdAt: "desc" },
     });
+
     return NextResponse.json(categories);
   } catch (error) {
     console.error("Failed to fetch categories:", error);
@@ -57,7 +76,10 @@ export async function POST(request: Request) {
       );
     }
 
-    const newCategory = await prisma.category.create({
+    const dbService = new DbService(); 
+    const client = await dbService.getDatabase(); 
+
+    const newCategory = await client.category.create({
       data: {
         name,
         userId,
