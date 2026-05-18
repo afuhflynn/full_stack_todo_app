@@ -83,13 +83,13 @@ export async function todoPUT(
 }
 
 export async function todoGetOne( 
-  request: NextRequest
+  id: string 
 ){ 
-  const service = new TodoService(); 
   
-  const json = await request.json(); 
+  const service = new TodoService(); 
 
-  const response = await service.findOneTodo(json); 
+
+  const response = await service.findOneTodo(id); 
 
   return NextResponse.json( 
     response, 
