@@ -64,8 +64,8 @@ export class TodoService {
     return existingTodo; 
   }
 
-  async findOneTodo(data: Partial<Todo>): Promise<responseType<Todo>> {
-    if(!typia.is<Partial<Todo>>(data)) return { 
+  async findOneTodo(id: string): Promise<responseType<Todo>> {
+    if(!typia.is<Todo['id']>(id)) return { 
       data: [], 
       message: "invalid data", 
       status: 400
@@ -74,7 +74,7 @@ export class TodoService {
 
     const factory = await this.getFactory(); 
 
-    const existingTodo = await factory.findTodo(data); 
+    const existingTodo = await factory.findTodo({id}); 
 
     if(existingTodo.data.length === 0){ 
       return { 
@@ -86,9 +86,6 @@ export class TodoService {
 
     return existingTodo; 
   }
-
-  
-
 
   async deleteTodo(data: Partial<Todo>): Promise<responseType<Todo>> {
 
