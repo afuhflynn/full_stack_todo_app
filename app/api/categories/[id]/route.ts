@@ -1,8 +1,22 @@
-import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
-import { UpdateCategoryPayload } from "@/types";
-import { headers } from "next/headers";
-import { auth } from "@/lib/auth";
+import { 
+  NextResponse 
+} from "next/server";
+
+import { 
+  DbService
+} from "@/server/services/db-service"; 
+
+import { 
+  UpdateCategoryPayload 
+} from "@/types";
+
+import { 
+  headers 
+} from "next/headers";
+
+import { 
+  auth 
+} from "@/lib/auth";
 
 /**
  * =================================
@@ -22,8 +36,12 @@ export async function GET(
   }
   try {
     const { id } = await params;
-    const category = await prisma.category.findUnique({
-      where: { id: params.id },
+
+    const dbService = new DbService(); 
+    const client = await dbService.getDatabase(); 
+
+    const category = await client.category.findUnique({
+      where: { id },
     });
 
     if (!category) {
@@ -63,8 +81,11 @@ export async function PUT(
     const { id } = await params;
     const { name }: UpdateCategoryPayload = await request.json();
 
-    const updatedCategory = await prisma.category.update({
-      where: { id: params.id },
+    const dbService = new DbService(); 
+    const client = await dbService.getDatabase(); 
+
+    const updatedCategory = await client.category.update({
+      where: { id },
       data: {
         name,
       },
@@ -98,8 +119,13 @@ export async function DELETE(
   }
   try {
     const { id } = await params;
-    await prisma.category.delete({
-      where: { id: params.id },
+    
+    const dbService = new DbService(); 
+    
+    const client = await dbService.getDatabase();
+
+    await client.category.delete({
+      where: { id },
     });
 
     return new NextResponse(null, { status: 204 }); // No Content
