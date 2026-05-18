@@ -30,7 +30,7 @@ import { responseType } from "@/types/response-types";
  * =============
  */
 
-async function AuthCheck(){ 
+export async function AuthCheck(){ 
   const session = await auth.api.getSession({headers: await headers()}); 
   if(!session){ 
     return NextResponse.json<responseType<Todo>>( 
