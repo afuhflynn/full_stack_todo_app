@@ -4,7 +4,11 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+}
+
+generator zod {
+  provider = "prisma-generator-typescript-interfaces"
+  output   = "../auto-generated/zod.ts"
 }
 
 model User {
@@ -19,6 +23,7 @@ model User {
   accounts      Account[]
   todos         Todo[]
   categories    Category[]
+  plans         plan[]
 
   @@unique([email])
   @@map("user")
@@ -37,6 +42,19 @@ model Session {
 
   @@unique([token])
   @@map("session")
+}
+
+enum planType {
+  premium
+  free
+  enterprise
+}
+
+model plan {
+  id       String   @id
+  planType planType
+  userId   String
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Account {
